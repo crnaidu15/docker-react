@@ -1,0 +1,12 @@
+FROM node:alpine
+
+WORKDIR /usr/app
+
+COPY package.json .
+RUN npm install
+COPY . .
+
+CMD ["npm", "run", "start"]
+
+# command to run the container
+# docker run -it -p 3001:3000 -v /usr/app/node_modules -v $(pwd):/usr/app bf35d240e5ca

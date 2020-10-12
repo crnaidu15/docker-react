@@ -1,0 +1,23 @@
+version: '3'
+services: 
+    client:
+        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        ports: 
+            - "3001:3000"
+        stdin_open: true # prevent React app from exit when starting with Docker Compose
+        volumes: 
+            - /usr/app/node_modules
+            - .:/usr/app # indicates everything in the original directory needs to be mapped to the working directory in container.
+            # After : is the container directory. Before : is the actual directory.
+    test:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        stdin_open: true # prevent React app from exit when starting with Docker Compose
+        volumes: 
+            - /usr/app/node_modules
+            - .:/usr/app
+        command: ["npm", "run", "test"] # override default command available in dockerfile
